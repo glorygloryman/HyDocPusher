@@ -1,0 +1,62 @@
+# Python dependencies for HyDocPusher
+# Version: 1.0.0
+# Python Version: 3.9.6
+
+# Core Web Framework
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+gunicorn==21.2.0
+
+# Data Processing and Validation
+pydantic==2.5.0
+pydantic-settings==2.1.0
+
+# HTTP Client
+httpx==0.25.2
+aiohttp==3.9.1
+
+# Message Queue
+pulsar-client==3.3.0
+
+# Configuration Management
+python-dotenv==1.0.0
+PyYAML==6.0.1
+
+# Database (if needed)
+sqlalchemy==2.0.23
+alembic==1.13.1
+asyncpg==0.29.0
+
+# Logging and Monitoring
+structlog==23.2.0
+prometheus-client==0.19.0
+
+# Async Utilities
+asyncio-mqtt==0.16.1
+aiofiles==23.2.1
+
+# JSON Processing
+orjson==3.9.10
+
+# Date/Time Utilities
+python-dateutil==2.8.2
+pytz==2023.3
+
+# Security
+cryptography==41.0.7
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+
+# Utilities
+click==8.1.7
+rich==13.7.0
+typing-extensions==4.8.0
+
+# Development dependencies (separate file)
+# - pytest
+# - pytest-asyncio
+# - pytest-mock
+# - pytest-cov
+# - black
+# - flake8
+# - mypy

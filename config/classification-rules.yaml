@@ -1,0 +1,29 @@
+# 分类映射规则配置文件
+# 定义频道ID到档案分类的映射关系
+
+classification_rules:
+  - channel_id: "2240"
+    classfyname: "新闻头条"
+    classfy: "XXTT"
+  - channel_id: "2241"
+    classfyname: "集团新闻"
+    classfy: "JTXW"
+  - channel_id: "2242"
+    classfyname: "媒体报道"
+    classfy: "MTBD"
+  - channel_id: "2243"
+    classfyname: "红色云能"
+    classfy: "HHYN"
+  - channel_id: "2244"
+    classfyname: "清廉能投"
+    classfy: "QLNT"
+  - channel_id: "2245"
+    classfyname: "公告公示"
+    classfy: "GGGS"
+  - channel_id: "2246"
+    classfyname: "公众号"
+    classfy: "GGH"
+# 默认分类配置
+default:
+  classfyname: "集团新闻"
+  classfy: "JTXW"
