@@ -100,7 +100,7 @@
 **TASK003: Pulsar消费者类**
 
 * **功能描述 (Functional Description):**
-    * 创建Pulsar消息消费者类，负责连接到Pulsar集群、订阅指定Topic、接收消息并调用消息处理器进行处理。
+    * 创建Pulsar消息消费者类，负责连接到Pulsar集群(可配置)、订阅指定Topic(可配置)、接收消息并调用消息处理器进行处理。
 
 * **前置任务 (Prerequisites):**
     * TASK001, TASK002
@@ -131,6 +131,10 @@
         * **Given:** Pulsar消费者正在运行并处理消息。
         * **When:** 调用`PulsarConsumer.close()`方法。
         * **Then:** 系统应停止接收新消息，完成当前消息处理，并释放所有资源。
+    * **Test Case 5: 标准消息格式处理**
+        * **Given:** Pulsar消费者已连接，Topic中有符合系统集成文档2.2章节格式的完整消息（包含MSG、DATA、ISSUCCESS字段，DATA中包含SITENAME、CRTIME、CHANNELID、VIEWID、DOCID、OPERTYPE等必要字段，以及APPENDIX附件信息）。
+        * **When:** 消息到达时触发消息处理回调。
+        * **Then:** 系统应正确解析消息的所有字段（MSG状态、DATA业务数据、CHNLDOC频道文档信息、APPENDIX附件列表），验证消息格式完整性，并成功调用数据转换器处理包含图片、视频等多种附件类型的复杂消息结构。
 
 **TASK004: 消息处理器类**
 
