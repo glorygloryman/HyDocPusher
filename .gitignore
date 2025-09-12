@@ -251,3 +251,6 @@ processing/
 # Performance monitoring
 metrics/
 monitoring/
+
+# Claude init directory (embedded git repo)
+claude-init/

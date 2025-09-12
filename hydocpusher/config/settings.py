@@ -4,41 +4,89 @@
 """
 
 from typing import Optional
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, field_validator, ConfigDict
 from pydantic_settings import BaseSettings
 import os
 
 
-class PulsarConfig(BaseModel):
+class PulsarConfig(BaseSettings):
     """Pulsar连接配置"""
-    cluster_url: str = Field(default="pulsar://localhost:6650", env="PULSAR_CLUSTER_URL")
-    topic: str = Field(default="persistent://public/default/content-publish", env="PULSAR_TOPIC")
-    subscription: str = Field(default="hydocpusher-subscription", env="PULSAR_SUBSCRIPTION")
-    dead_letter_topic: str = Field(
-        default="persistent://public/default/hydocpusher-dlq", 
-        env="PULSAR_DEAD_LETTER_TOPIC"
+    model_config = ConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        case_sensitive=False
     )
+    
+    cluster_url: str = Field(default="pulsar://192.168.210.60:26650", env="PULSAR_CLUSTER_URL")
+    topic: str = Field(default="user-to-pretreat", env="PULSAR_TOPIC")
+    subscription: str = Field(default="hydocpusher-subscription", env="PULSAR_SUBSCRIPTION")
+    dead_letter_topic: str = Field(default="user-to-pretreat", env="PULSAR_DEAD_LETTER_TOPIC")
+    
+    # 认证配置 - 开发测试环境默认配置
+    username: Optional[str] = Field(default=None, env="PULSAR_USERNAME")
+    password: Optional[str] = Field(default=None, env="PULSAR_PASSWORD")
+    
+    # 租户和命名空间配置
+    tenant: str = Field(default="bigdata", env="PULSAR_TENANT")
+    namespace: str = Field(default="text", env="PULSAR_NAMESPACE")
+    
+    # 连接配置
+    connection_timeout: int = Field(default=30000, env="PULSAR_CONNECTION_TIMEOUT")
+    operation_timeout: int = Field(default=30000, env="PULSAR_OPERATION_TIMEOUT")
     
     @field_validator('cluster_url')
     @classmethod
     def validate_cluster_url(cls, v):
+        # 支持HTTP URL，自动转换为pulsar://
+        if v.startswith('http://'):
+            v = v.replace('http://', 'pulsar://')
+        elif v.startswith('https://'):
+            v = v.replace('https://', 'pulsar+ssl://')
+        
         if not v or not v.startswith(('pulsar://', 'pulsar+ssl://')):
             raise ValueError("Pulsar cluster URL must start with 'pulsar://' or 'pulsar+ssl://'")
         return v
+    
+    @field_validator('connection_timeout', 'operation_timeout')
+    @classmethod
+    def validate_timeout(cls, v):
+        if v <= 0:
+            raise ValueError("Timeout must be positive")
+        return v
+    
+    def get_full_topic_name(self) -> str:
+        """获取完整的Topic名称"""
+        # 如果topic已经是完整格式，直接返回
+        if self.topic.startswith('persistent://'):
+            return self.topic
+        # 否则构建完整的topic名称
+        topic_name = self.topic.split('/')[-1]  # 提取最后的topic名称部分
+        return f"persistent://{self.tenant}/{self.namespace}/{topic_name}"
+    
+    def get_full_dead_letter_topic_name(self) -> str:
+        """获取完整的死信队列Topic名称"""
+        if self.dead_letter_topic.startswith('persistent://'):
+            return self.dead_letter_topic
+        dlq_topic = self.dead_letter_topic.split('/')[-1]
+        return f"persistent://{self.tenant}/{self.namespace}/{dlq_topic}"
+    
+    def has_authentication(self) -> bool:
+        """检查是否配置了认证信息"""
+        return bool(self.username and self.password)
 
 
-class ArchiveConfig(BaseModel):
+class ArchiveConfig(BaseSettings):
     """档案系统配置"""
-    api_url: str = Field(default="http://localhost:8080", env="ARCHIVE_API_URL")
-    timeout: int = Field(default=30000, env="ARCHIVE_TIMEOUT")
-    retry_max_attempts: int = Field(default=3, env="ARCHIVE_RETRY_MAX_ATTEMPTS")
-    retry_delay: int = Field(default=60000, env="ARCHIVE_RETRY_DELAY")
-    app_id: str = Field(default="NEWS", env="ARCHIVE_APP_ID")
-    app_token: str = Field(default="TmV3cytJbnRlcmZhY2U=", env="ARCHIVE_APP_TOKEN")
-    company_name: str = Field(default="云南省能源投资集团有限公司", env="ARCHIVE_COMPANY_NAME")
-    archive_type: str = Field(default="17", env="ARCHIVE_TYPE")
-    domain: str = Field(default="www.cnyeig.com", env="DOMAIN")
-    retention_period: int = Field(default=30, env="ARCHIVE_RETENTION_PERIOD")
+    api_url: str = Field(default="http://localhost:8080")
+    timeout: int = Field(default=30000)
+    retry_max_attempts: int = Field(default=3)
+    retry_delay: int = Field(default=60000)
+    app_id: str = Field(default="NEWS")
+    app_token: str = Field(default="TmV3cytJbnRlcmZhY2U=")
+    company_name: str = Field(default="云南省能源投资集团有限公司")
+    archive_type: str = Field(default="17")
+    domain: str = Field(default="www.cnyeig.com")
+    retention_period: int = Field(default=30)
     
     @field_validator('api_url')
     @classmethod
@@ -74,51 +122,50 @@ class ArchiveConfig(BaseModel):
         return v
 
 
-class ClassificationConfig(BaseModel):
+class ClassificationConfig(BaseSettings):
     """分类映射配置"""
-    rules_file: str = Field(default="config/classification-rules.yaml", env="CLASSIFICATION_RULES_FILE")
-    default_classfyname: str = Field(default="其他", env="DEFAULT_CLASSFYNAME")
-    default_classfy: str = Field(default="QT", env="DEFAULT_CLASSFY")
+    rules_file: str = Field(default="config/classification-rules.yaml")
+    default_classfyname: str = Field(default="其他")
+    default_classfy: str = Field(default="QT")
 
 
-class LoggingConfig(BaseModel):
+class LoggingConfig(BaseSettings):
     """日志配置"""
-    level: str = Field(default="INFO", env="LOG_LEVEL")
-    format: str = Field(
-        default="%(asctime)s [%(levelname)s] %(name)s: %(message)s", 
-        env="LOG_FORMAT"
-    )
-    file_path: Optional[str] = Field(default=None, env="LOG_FILE_PATH")
-    max_file_size: str = Field(default="10MB", env="LOG_MAX_FILE_SIZE")
-    backup_count: int = Field(default=5, env="LOG_BACKUP_COUNT")
+    level: str = Field(default="INFO")
+    format: str = Field(default="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
+    file_path: Optional[str] = Field(default=None)
+    max_file_size: str = Field(default="10MB")
+    backup_count: int = Field(default=5)
 
 
 class AppConfig(BaseSettings):
     """应用主配置类"""
     
-    # 服务配置
-    server_host: str = Field(default="0.0.0.0", env="SERVER_HOST")
-    server_port: int = Field(default=8080, env="SERVER_PORT")
+    model_config = ConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        case_sensitive=False,
+        env_nested_delimiter='__'
+    )
     
-    # 子配置
+    # 服务器配置
+    server_host: str = "0.0.0.0"
+    server_port: int = 8080
+    
+    # 各模块配置 - 使用工厂方法创建，确保环境变量被正确读取
     pulsar: PulsarConfig = Field(default_factory=PulsarConfig)
-    archive: ArchiveConfig = Field(default_factory=ArchiveConfig, description="Archive system configuration")
+    archive: ArchiveConfig = Field(default_factory=ArchiveConfig)
     classification: ClassificationConfig = Field(default_factory=ClassificationConfig)
     logging: LoggingConfig = Field(default_factory=LoggingConfig)
     
     # 应用配置
-    app_name: str = Field(default="HyDocPusher", env="APP_NAME")
-    app_version: str = Field(default="1.0.0", env="APP_VERSION")
-    debug: bool = Field(default=False, env="DEBUG")
+    app_name: str = "HyDocPusher"
+    app_version: str = "1.0.0"
+    debug: bool = False
     
     # 性能配置
-    max_concurrent_messages: int = Field(default=100, env="MAX_CONCURRENT_MESSAGES")
-    message_processing_timeout: int = Field(default=300000, env="MESSAGE_PROCESSING_TIMEOUT")
-    
-    class Config:
-        env_file = ".env"
-        env_file_encoding = "utf-8"
-        case_sensitive = False
+    max_concurrent_messages: int = 100
+    message_processing_timeout: int = 300000
     
     @field_validator('server_port')
     @classmethod
@@ -194,7 +241,21 @@ def get_config() -> AppConfig:
     """获取全局配置实例"""
     global _config_instance
     if _config_instance is None:
-        _config_instance = AppConfig.create_from_env()
+        # 手动从环境变量创建配置，确保环境变量被正确读取
+        pulsar_config = PulsarConfig(
+            cluster_url=os.getenv('PULSAR_CLUSTER_URL', 'pulsar://192.168.210.60:26650'),
+            topic=os.getenv('PULSAR_TOPIC', 'content-publish'),
+            subscription=os.getenv('PULSAR_SUBSCRIPTION', 'hydocpusher-subscription'),
+            dead_letter_topic=os.getenv('PULSAR_DEAD_LETTER_TOPIC', 'hydocpusher-dlq'),
+            username=os.getenv('PULSAR_USERNAME', 'pulsar'),
+            password=os.getenv('PULSAR_PASSWORD', 'pulsar'),
+            tenant=os.getenv('PULSAR_TENANT', 'public'),
+            namespace=os.getenv('PULSAR_NAMESPACE', 'default'),
+            connection_timeout=int(os.getenv('PULSAR_CONNECTION_TIMEOUT', '30000')),
+            operation_timeout=int(os.getenv('PULSAR_OPERATION_TIMEOUT', '30000'))
+        )
+        
+        _config_instance = AppConfig(pulsar=pulsar_config)
         _config_instance.validate_required_configs()
     return _config_instance
 
