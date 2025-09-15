@@ -4,7 +4,7 @@
 classification_rules:
   - channel_id: "2240"
     classfyname: "新闻头条"
-    classfy: "XXTT"
+    classfy: "XWTT"
   - channel_id: "2241"
     classfyname: "集团新闻"
     classfy: "JTXW"

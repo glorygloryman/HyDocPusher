@@ -10,6 +10,7 @@ import logging
 import sys
 import os
 import time
+import traceback
 from datetime import datetime
 from pathlib import Path
 from typing import List, Dict
@@ -103,86 +104,135 @@ class EndToEndTest:
             return False
     
     def create_test_messages(self) -> List[Dict]:
-        """创建测试消息"""
+        """创建测试消息（使用真实的示例数据结构）"""
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
         
         messages = [
             {
-                "MSG": "SUCCESS",
+                "MSG": "操作成功",
                 "DATA": {
-                    "SITENAME": "云南省能源投资集团有限公司",
-                    "CRTIME": datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                    "SITENAME": "测试推送",
+                    "CRTIME": "2025-08-29 18:53:15",
                     "CHANNELID": "2240",
-                    "VIEWID": "123456",
+                    "VIEWID": "11",
+                    "VIEWNAME": "GovDocNewsAPP",
+                    "SITEID": "33",
                     "DOCID": f"e2e_test_news_{timestamp}",
-                    "OPERTYPE": "ADD",
-                    "DOCTITLE": "端到端测试新闻标题",
-                    "DOCCONTENT": "这是一条端到端测试新闻内容，用于验证完整的消息处理流程。",
-                    "DOCPUBURL": f"http://www.cnyeig.com/news/e2e_test_news_{timestamp}.html",
+                    "OPERTYPE": "1",
+                    "CHANNELNAV": "2240",
+                    "DATA": {
+                        "DOCTITLE": "端到端测试新闻标题",
+                        "DOCCONTENT": "这是一条端到端测试新闻内容，用于验证完整的消息处理流程。",
+                        "DOCAUTHOR": "测试部门",
+                        "DOCRELTIME": "2025-04-09 15:46:25",
+                        "DOCPUBURL": f"https://www.cnyeig.com/csts/test_2240/202508/t{timestamp}_64941.html",
+                        "ATTACHPIC": "1",
+                        "THUMBFILES": "test_image.jpg",
+                        "MEDIATYPE": "1",
+                        "SITENAME": "测试推送",
+                        "CHANNELID": "2240",
+                        "SITEID": "33",
+                        "PUBSTATUS": "1"
+                    },
                     "CHNLDOC": {
-                        "CHANNELNAME": "新闻头条",
-                        "CHANNELID": "2240"
+                        "DOCSTATUS": "10",
+                        "PUBSTATUS": "1",
+                        "DOCID": f"e2e_test_news_{timestamp}",
+                        "CHNLID": "2240",
+                        "SITEID": "33"
                     },
                     "APPENDIX": [
                         {
-                            "APPNAME": "测试图片1.jpg",
-                            "APPURL": "/upload/images/test1.jpg",
-                            "APPFLAG": "40"
+                            "APPFILE": "test_image.jpg",
+                            "APPFLAG": "20"
                         },
                         {
-                            "APPNAME": "测试视频.mp4",
-                            "APPURL": "/upload/videos/test.mp4",
+                            "APPFILE": "test_video.mp4",
                             "APPFLAG": "50"
                         }
-                    ]
+                    ],
+                    "ID": "84085",
+                    "CHANNELDESCNAV": "数字能投推送测试",
+                    "TYPE": "1"
                 },
-                "ISSUCCESS": True
+                "ISSUCCESS": "true"
             },
             {
-                "MSG": "SUCCESS",
+                "MSG": "操作成功",
                 "DATA": {
-                    "SITENAME": "云南省能源投资集团有限公司",
-                    "CRTIME": datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                    "SITENAME": "测试推送2",
+                    "CRTIME": "2025-08-29 19:00:00",
                     "CHANNELID": "2241",
-                    "VIEWID": "789012",
+                    "VIEWID": "12",
+                    "VIEWNAME": "GovDocNewsAPP",
+                    "SITEID": "34",
                     "DOCID": f"e2e_test_notice_{timestamp}",
-                    "OPERTYPE": "ADD",
-                    "DOCTITLE": "端到端测试通知公告",
-                    "DOCCONTENT": "这是一条端到端测试通知公告内容。",
-                    "DOCPUBURL": f"http://www.cnyeig.com/notice/e2e_test_notice_{timestamp}.html",
+                    "OPERTYPE": "2",
+                    "CHANNELNAV": "2241",
+                    "DATA": {
+                        "DOCTITLE": "端到端测试通知公告",
+                        "DOCCONTENT": "这是一条端到端测试通知公告内容。",
+                        "DOCAUTHOR": "行政部",
+                        "DOCRELTIME": "2025-04-10 10:00:00",
+                        "DOCPUBURL": f"https://www.cnyeig.com/csts/test_2241/202508/t{timestamp}_64942.html",
+                        "MEDIATYPE": "1",
+                        "ATTACHPIC": "1",
+                        "THUMBFILES": "notice_doc.jpg",
+                        "SITENAME": "测试推送2",
+                        "CHANNELID": "2241",
+                        "SITEID": "34",
+                        "PUBSTATUS": "1"
+                    },
                     "CHNLDOC": {
-                        "CHANNELNAME": "通知公告",
-                        "CHANNELID": "2241"
+                        "DOCSTATUS": "10",
+                        "PUBSTATUS": "1",
+                        "DOCID": f"e2e_test_notice_{timestamp}",
+                        "CHNLID": "2241",
+                        "SITEID": "34"
                     },
                     "APPENDIX": [
                         {
-                            "APPNAME": "测试文档.pdf",
-                            "APPURL": "/upload/docs/test.pdf",
+                            "APPFILE": "test_document.pdf",
                             "APPFLAG": "30"
                         }
                     ]
                 },
-                "ISSUCCESS": True
+                "ISSUCCESS": "true"
             },
             {
-                "MSG": "SUCCESS",
+                "MSG": "操作成功",
                 "DATA": {
-                    "SITENAME": "云南省能源投资集团有限公司",
-                    "CRTIME": datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                    "SITENAME": "测试推送3",
+                    "CRTIME": "2025-08-29 20:15:30",
                     "CHANNELID": "9999",  # 不存在的频道，测试默认分类
-                    "VIEWID": "345678",
+                    "VIEWID": "13",
+                    "VIEWNAME": "GovDocNewsAPP",
+                    "SITEID": "35",
                     "DOCID": f"e2e_test_unknown_{timestamp}",
-                    "OPERTYPE": "ADD",
-                    "DOCTITLE": "端到端测试未知分类内容",
-                    "DOCCONTENT": "这是一条测试未知分类的内容。",
-                    "DOCPUBURL": f"http://www.cnyeig.com/other/e2e_test_unknown_{timestamp}.html",
+                    "OPERTYPE": "3",
+                    "CHANNELNAV": "9999",
+                    "DATA": {
+                        "DOCTITLE": "端到端测试未知分类内容",
+                        "DOCCONTENT": "这是一条测试未知分类的内容，用于验证默认分类处理。",
+                        "DOCAUTHOR": "测试部门",
+                        "DOCRELTIME": "2025-04-11 14:30:00",
+                        "DOCPUBURL": f"https://www.cnyeig.com/csts/test_9999/202508/t{timestamp}_64943.html",
+                        "MEDIATYPE": "1",
+                        "SITENAME": "测试推送3",
+                        "CHANNELID": "9999",
+                        "SITEID": "35",
+                        "PUBSTATUS": "1"
+                    },
                     "CHNLDOC": {
-                        "CHANNELNAME": "未知频道",
-                        "CHANNELID": "9999"
+                        "DOCSTATUS": "10",
+                        "PUBSTATUS": "1",
+                        "DOCID": f"e2e_test_unknown_{timestamp}",
+                        "CHNLID": "9999",
+                        "SITEID": "35"
                     },
                     "APPENDIX": []
                 },
-                "ISSUCCESS": True
+                "ISSUCCESS": "true"
             }
         ]
         
@@ -197,8 +247,14 @@ class EndToEndTest:
                 message_json = json.dumps(message, ensure_ascii=False)
                 doc_id = message['DATA']['DOCID']
                 
-                logger.info(f"发送消息 {i+1}/{len(messages)}: {doc_id}")
+                logger.info(f"=== 发送消息 {i+1}/{len(messages)} ===")
+                logger.info(f"文档ID: {doc_id}")
+                logger.info(f"频道ID: {message['DATA']['CHANNELID']}")
+                logger.info(f"操作类型: {message['DATA']['OPERTYPE']}")
+                logger.info(f"消息大小: {len(message_json)} 字节")
                 
+                # 记录HTTP请求详情
+                start_time = time.time()
                 message_id = self.producer.send(
                     content=message_json.encode('utf-8'),
                     properties={
@@ -209,6 +265,7 @@ class EndToEndTest:
                         'test_sequence': str(i)
                     }
                 )
+                end_time = time.time()
                 
                 self.sent_messages.append({
                     'message_id': str(message_id),
@@ -216,7 +273,10 @@ class EndToEndTest:
                     'data': message
                 })
                 
-                logger.info(f"消息发送成功，Message ID: {message_id}")
+                logger.info(f"✅ 消息发送成功")
+                logger.info(f"Message ID: {message_id}")
+                logger.info(f"发送耗时: {end_time - start_time:.3f}秒")
+                logger.info(f"=== 消息发送完成 ===")
                 
                 # 间隔发送
                 if i < len(messages) - 1:
@@ -258,16 +318,26 @@ class EndToEndTest:
                                 message_data = json.loads(message_content)
                                 
                                 doc_id = message_data['DATA']['DOCID']
-                                logger.info(f"处理测试消息: {doc_id}")
+                                logger.info(f"=== 处理测试消息 ===")
+                                logger.info(f"文档ID: {doc_id}")
+                                logger.info(f"消息大小: {len(message_content)} 字节")
+                                logger.info(f"频道ID: {message_data['DATA']['CHANNELID']}")
+                                logger.info(f"操作类型: {message_data['DATA']['OPERTYPE']}")
                                 
                                 # 验证和处理消息
                                 processed_data = None
                                 if self.transformer:
                                     try:
+                                        transform_start = time.time()
                                         processed_data = self.transformer.transform(message_data)
-                                        logger.info(f"数据转换成功: {processed_data.get('title', 'Unknown')}")
+                                        transform_end = time.time()
+                                        logger.info(f"✅ 数据转换成功")
+                                        logger.info(f"转换后标题: {processed_data.get('title', 'Unknown')}")
+                                        logger.info(f"转换耗时: {transform_end - transform_start:.3f}秒")
                                     except Exception as e:
-                                        logger.error(f"数据转换失败: {str(e)}")
+                                        logger.error(f"❌ 数据转换失败: {str(e)}")
+                                        logger.error(f"异常类型: {type(e).__name__}")
+                                        logger.error(f"异常堆栈: {traceback.format_exc()}")
                                 
                                 self.received_messages.append({
                                     'message_id': str(msg.message_id()),
@@ -279,10 +349,14 @@ class EndToEndTest:
                                 
                                 # 确认消息
                                 self.consumer.acknowledge(msg)
-                                logger.info(f"消息处理完成: {doc_id}")
+                                logger.info(f"✅ 消息处理完成: {doc_id}")
+                                logger.info(f"=== 消息处理结束 ===")
                                 
                             except Exception as e:
-                                logger.error(f"处理消息时出错: {str(e)}")
+                                logger.error(f"❌ 处理消息时出错: {str(e)}")
+                                logger.error(f"异常类型: {type(e).__name__}")
+                                logger.error(f"异常详情: {str(e)}")
+                                logger.error(f"异常堆栈: {traceback.format_exc()}")
                                 self.consumer.negative_acknowledge(msg)
                         else:
                             # 不是测试消息，确认并跳过

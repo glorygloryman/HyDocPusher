@@ -80,3 +80,10 @@ class ConnectionException(HyDocPusherException):
     
     def __init__(self, message: str, cause: Exception = None):
         super().__init__(message, "CONNECTION_ERROR", cause)
+
+
+class HealthCheckException(HyDocPusherException):
+    """健康检查异常"""
+    
+    def __init__(self, message: str, cause: Exception = None):
+        super().__init__(message, "HEALTH_CHECK_ERROR", cause)

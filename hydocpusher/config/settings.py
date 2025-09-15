@@ -3,36 +3,37 @@
 使用Pydantic Settings管理所有应用配置
 """
 
-from typing import Optional
+from typing import Optional, Annotated
 from pydantic import BaseModel, Field, field_validator, ConfigDict
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 import os
 
 
 class PulsarConfig(BaseSettings):
     """Pulsar连接配置"""
-    model_config = ConfigDict(
+    model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",
-        case_sensitive=False
+        case_sensitive=False,
+        env_prefix="PULSAR_"
     )
     
-    cluster_url: str = Field(default="pulsar://192.168.210.60:26650", env="PULSAR_CLUSTER_URL")
-    topic: str = Field(default="user-to-pretreat", env="PULSAR_TOPIC")
-    subscription: str = Field(default="hydocpusher-subscription", env="PULSAR_SUBSCRIPTION")
-    dead_letter_topic: str = Field(default="user-to-pretreat", env="PULSAR_DEAD_LETTER_TOPIC")
+    cluster_url: str = Field(default="pulsar://localhost:6650")
+    topic: str = Field(default="persistent://public/default/content-publish")
+    subscription: str = Field(default="hydocpusher-subscription")
+    dead_letter_topic: str = Field(default="user-to-pretreat")
     
-    # 认证配置 - 开发测试环境默认配置
-    username: Optional[str] = Field(default=None, env="PULSAR_USERNAME")
-    password: Optional[str] = Field(default=None, env="PULSAR_PASSWORD")
+    # 认证配置
+    username: Optional[str] = Field(default=None)
+    password: Optional[str] = Field(default=None)
     
-    # 租户和命名空间配置
-    tenant: str = Field(default="bigdata", env="PULSAR_TENANT")
-    namespace: str = Field(default="text", env="PULSAR_NAMESPACE")
+    # 租户和命名空间
+    tenant: str = Field(default="bigdata")
+    namespace: str = Field(default="text")
     
-    # 连接配置
-    connection_timeout: int = Field(default=30000, env="PULSAR_CONNECTION_TIMEOUT")
-    operation_timeout: int = Field(default=30000, env="PULSAR_OPERATION_TIMEOUT")
+    # 超时配置
+    connection_timeout: int = Field(default=30000)
+    operation_timeout: int = Field(default=30000)
     
     @field_validator('cluster_url')
     @classmethod
@@ -77,7 +78,14 @@ class PulsarConfig(BaseSettings):
 
 class ArchiveConfig(BaseSettings):
     """档案系统配置"""
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        case_sensitive=False,
+        env_prefix="ARCHIVE_"
+    )
     api_url: str = Field(default="http://localhost:8080")
+    base_url: str = Field(default="http://localhost:8080")  # 添加base_url字段作为api_url的别名
     timeout: int = Field(default=30000)
     retry_max_attempts: int = Field(default=3)
     retry_delay: int = Field(default=60000)
@@ -141,7 +149,7 @@ class LoggingConfig(BaseSettings):
 class AppConfig(BaseSettings):
     """应用主配置类"""
     
-    model_config = ConfigDict(
+    model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",
         case_sensitive=False,
@@ -153,10 +161,10 @@ class AppConfig(BaseSettings):
     server_port: int = 8080
     
     # 各模块配置 - 使用工厂方法创建，确保环境变量被正确读取
-    pulsar: PulsarConfig = Field(default_factory=PulsarConfig)
-    archive: ArchiveConfig = Field(default_factory=ArchiveConfig)
-    classification: ClassificationConfig = Field(default_factory=ClassificationConfig)
-    logging: LoggingConfig = Field(default_factory=LoggingConfig)
+    pulsar: PulsarConfig = Field(default_factory=lambda: PulsarConfig())
+    archive: ArchiveConfig = Field(default_factory=lambda: ArchiveConfig())
+    classification: ClassificationConfig = Field(default_factory=lambda: ClassificationConfig())
+    logging: LoggingConfig = Field(default_factory=lambda: LoggingConfig())
     
     # 应用配置
     app_name: str = "HyDocPusher"
@@ -166,6 +174,7 @@ class AppConfig(BaseSettings):
     # 性能配置
     max_concurrent_messages: int = 100
     message_processing_timeout: int = 300000
+    batch_size: int = Field(default=100)  # 添加batch_size字段
     
     @field_validator('server_port')
     @classmethod
@@ -241,21 +250,7 @@ def get_config() -> AppConfig:
     """获取全局配置实例"""
     global _config_instance
     if _config_instance is None:
-        # 手动从环境变量创建配置，确保环境变量被正确读取
-        pulsar_config = PulsarConfig(
-            cluster_url=os.getenv('PULSAR_CLUSTER_URL', 'pulsar://192.168.210.60:26650'),
-            topic=os.getenv('PULSAR_TOPIC', 'content-publish'),
-            subscription=os.getenv('PULSAR_SUBSCRIPTION', 'hydocpusher-subscription'),
-            dead_letter_topic=os.getenv('PULSAR_DEAD_LETTER_TOPIC', 'hydocpusher-dlq'),
-            username=os.getenv('PULSAR_USERNAME', 'pulsar'),
-            password=os.getenv('PULSAR_PASSWORD', 'pulsar'),
-            tenant=os.getenv('PULSAR_TENANT', 'public'),
-            namespace=os.getenv('PULSAR_NAMESPACE', 'default'),
-            connection_timeout=int(os.getenv('PULSAR_CONNECTION_TIMEOUT', '30000')),
-            operation_timeout=int(os.getenv('PULSAR_OPERATION_TIMEOUT', '30000'))
-        )
-        
-        _config_instance = AppConfig(pulsar=pulsar_config)
+        _config_instance = AppConfig.create_from_env()
         _config_instance.validate_required_configs()
     return _config_instance
 
@@ -263,6 +258,7 @@ def get_config() -> AppConfig:
 def reload_config() -> AppConfig:
     """重新加载配置"""
     global _config_instance
+    _config_instance = None  # 清空缓存
     _config_instance = AppConfig.create_from_env()
     _config_instance.validate_required_configs()
     return _config_instance

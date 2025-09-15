@@ -250,19 +250,14 @@ class TestEnvironmentVariables:
     
     def test_env_file_loading(self):
         """测试从.env文件加载配置"""
-        with tempfile.NamedTemporaryFile(mode='w', suffix='.env', delete=False) as f:
-            f.write('ARCHIVE_API_URL=http://env-file.com\n')
-            f.write('ARCHIVE_APP_TOKEN=env-file-token\n')
-            env_file = f.name
-        
-        try:
-            # 临时设置env_file并创建配置
-            with patch.object(AppConfig.Config, 'env_file', env_file):
-                config = AppConfig(archive={"api_url": "http://env-file.com", "app_token": "env-file-token"})
-                assert config.archive.api_url == 'http://env-file.com'
-                assert config.archive.app_token == 'env-file-token'
-        finally:
-            os.unlink(env_file)
+        # 直接通过环境变量测试配置加载
+        with patch.dict(os.environ, {
+            'ARCHIVE_API_URL': 'http://env-file.com',
+            'ARCHIVE_APP_TOKEN': 'env-file-token'
+        }):
+            config = AppConfig()
+            assert config.archive.api_url == 'http://env-file.com'
+            assert config.archive.app_token == 'env-file-token'
 
 
 class TestGlobalConfigInstance:
@@ -287,7 +282,7 @@ class TestGlobalConfigInstance:
             mock_create.return_value = mock_config
             
             result = get_config()
-            assert result == mock_config
+            assert result is mock_config
             mock_create.assert_called_once()
     
     def test_get_config_returns_cached_instance(self):
@@ -301,7 +296,7 @@ class TestGlobalConfigInstance:
             # 第二次调用
             result2 = get_config()
             
-            assert result1 == result2 == mock_config
+            assert result1 is result2 is mock_config
             mock_create.assert_called_once()  # 只调用一次
     
     def test_reload_config(self):
@@ -313,14 +308,14 @@ class TestGlobalConfigInstance:
             
             # 第一次加载
             result1 = get_config()
-            assert result1 == mock_config1
+            assert result1 is mock_config1
             
             # 重新加载
             result2 = reload_config()
-            assert result2 == mock_config2
+            assert result2 is mock_config2
             
             # 再次获取应该返回新配置
             result3 = get_config()
-            assert result3 == mock_config2
+            assert result3 is mock_config2
             
             assert mock_create.call_count == 2

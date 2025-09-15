@@ -88,10 +88,10 @@ class AttachmentBuilder:
         webhttp = source_message.DATA.DATA.WEBHTTP
         
         try:
-            # # 1. 构建HTML正文附件
-            # html_attachment = self.build_html_attachment(source_message.DATA.DATA.DOCPUBURL, document_title)
-            # if html_attachment:
-            #     attachments.append(html_attachment)
+            # 1. 构建HTML正文附件
+            html_attachment = self.build_html_attachment(source_message.DATA.DATA.DOCPUBURL, document_title)
+            if html_attachment:
+                attachments.append(html_attachment)
             
             # 2. 从HTML内容中提取附件
             if source_message.DATA.DATA.DOCHTMLCON:
