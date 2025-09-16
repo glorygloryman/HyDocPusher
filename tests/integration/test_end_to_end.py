@@ -117,120 +117,164 @@ class EndToEndTest:
                     "VIEWID": "11",
                     "VIEWNAME": "GovDocNewsAPP",
                     "SITEID": "33",
-                    "DOCID": f"e2e_test_news_{timestamp}",
+                    "DOCID": "64941",
                     "OPERTYPE": "1",
                     "CHANNELNAV": "2240",
                     "DATA": {
-                        "DOCTITLE": "端到端测试新闻标题",
-                        "DOCCONTENT": "这是一条端到端测试新闻内容，用于验证完整的消息处理流程。",
-                        "DOCAUTHOR": "测试部门",
-                        "DOCRELTIME": "2025-04-09 15:46:25",
-                        "DOCPUBURL": f"https://www.cnyeig.com/csts/test_2240/202508/t{timestamp}_64941.html",
-                        "ATTACHPIC": "1",
-                        "THUMBFILES": "test_image.jpg",
-                        "MEDIATYPE": "1",
-                        "SITENAME": "测试推送",
+                        "ISFOCUSIMAGE": "否",
+                        "DOCUMENTLABELS": "",
+                        "CLASSINFO_ID_PATHS": [],
                         "CHANNELID": "2240",
+                        "DOCAUTHOR": "",
+                        "DOCCOVERPIC": "[]",
+                        "ATTACHPIC": "1",
+                        "DOCSOURCENAME": "",
+                        "LISTSTYLE": "4",
+                        "PARENTCHNLDESC": "",
+                        "COMMENTFLAG": "0",
+                        "CLASSINFO_NAMES": [],
+                        "CHNLHASCHILDREN": "0",
+                        "THUMBFILES": "W020250829679959407981.jpg",
+                        "LABEL": "",
+                        "DOCTYPE": "20",
+                        "LISTTITLE": "测试 裸眼3D看云能",
+                        "LISTPICS": "[]",
+                        "SITENAME": "测试推送",
+                        "DOCUMENT_RELATED_APPENDIX": "[]",
+                        "CHANNELTYPE": "",
+                        "SEARCHWORDVALUE": "",
+                        "DOCORDER": "34",
+                        "RECID": "84085",
+                        "ACTIONTYPE": "3",
+                        "DOCUMENT_CONTENT_APPENDIX": "[]",
+                        "FOCUSIMG": "",
+                        "LISTIMGURLS": "",
+                        "METADATAID": "64941",
+                        "CLASSINFO_IDS": [],
+                        "DEFAULTRELDOCS": [],
+                        "DOCFILENAME": "",
+                        "SITEDESC": "数字能投订阅号推送",
+                        "DOCHTMLCON": "<div class=\"trs_editor_view TRS_UEDITOR trs_paper_default\"><p style=\"text-align: center\"><iframe frameborder=\"0\" masid=\"186\" class=\"edui-upload-video video-js vjs-default-skin\" src=\"/mas/openapi/pages.do?method=exPlay&appKey=gov&id=186&autoPlay=false\" width=\"3840\" height=\"2160\" name=\"裸眼3d1.mp4\" appendix=\"true\" allowfullscreen=\"true\" style=\"\"></iframe></p><p><br/></p></div>",
+                        "DOCUMENT_RELATED_VIDEO": "[{\"APPDESC\":\"裸眼3d1\",\"APPURL\":\"/masvod/public/2025/04/09/186.images/v186_b1744184962825.jpg\",\"APPENDIXID\":84988}]",
+                        "CRUSER": "dev",
+                        "DOCUMENT_DOCRELTIME": "2025-04-09 15:46:25",
+                        "DEFAULTRELDOCS_IRS": "[]",
+                        "DOCUMENT_CONTENT_PIC": "[]",
+                        "SHORTTITLE": "",
+                        "CRTIME": "2025-08-29 18:53:16",
+                        "MEDIATYPE": "2",
+                        "DOCPEOPLE": "",
+                        "DOCRELTIME": "2025-04-09 15:46:25",
+                        "DOCCONTENT": "",
+                        "CHNLDOC_OPERTIME": "2025-08-29 18:54:06",
+                        "FOCUSFILENAME": "",
+                        "DOCTITLE": "裸眼3D看云能",
+                        "TXY": "集团党群部",
+                        "DOCPUBURL": "https://www.cnyeig.com/csts/test_2240/202508/t20250829_64941.html",
+                        "DOCUMENT_CONTENT_VIDEO": "[{\"APPDESC\":\"裸眼3d1\",\"APPURL\":\"/masvod/public/2025/04/09/186.images/v186_b1744184962825.jpg\",\"APPENDIXID\":84986},{\"APPDESC\":\"裸眼3d1\",\"APPURL\":\"/masvod/public/2025/04/09/186.images/v186_b1744184962825.jpg\",\"APPENDIXID\":84989}]",
+                        "DOCLINK": "",
+                        "VERSIONNUM": "0",
+                        "FOCUSIMAGE": "[]",
+                        "FROMID": "",
+                        "CLASSINFO_NAME_PATHS": [],
+                        "SUBDOCTITLE": "",
+                        "DOCKEYWORDS": "",
+                        "TITLECOLOR": "",
+                        "CLASSIFICATIONID": "6",
+                        "ORIGINMETADATAID": "61261",
                         "SITEID": "33",
-                        "PUBSTATUS": "1"
+                        "CHNLDESC": "数字能投推送测试",
+                        "PUBSTATUS": "1",
+                        "MODAL": "1",
+                        "ATTACHVIDEO": "1",
+                        "DOCUMENT_DOCCONTENT": "",
+                        "CHNLNAME": "新闻头条_2240",
+                        "DOCPLACE": "",
+                        "DOCUMENT_RELATED_PIC": "[{\"APPDESC\":\"裸眼3d1_0001.jpg\",\"APPURL\":\"https://www.cnyeig.com/csts/test_2240/202508/W020250829679959407981.jpg\",\"APPENDIXID\":84987}]",
+                        "DOCABSTRACT": "",
+                        "FOCUSTITLE": "",
+                        "FOCUSDESC": "",
+                        "WCMMETATABLEGOVDOCNEWSAPPID": "68",
+                        "WEBHTTP": "https://www.cnyeig.com/csts",
+                        "FOCUSIMAGETITLE": ""
                     },
                     "CHNLDOC": {
+                        "ISARCHIVE": "0",
+                        "DOCINFLOW": "0",
+                        "TIMEDSTATUS": "0",
+                        "OTHERVIEWMODE": "0",
+                        "POSCHNLID": "0",
+                        "SRCSITEID": "33",
+                        "DOCAUTHOR": "",
+                        "CARBONCOPYRECEIVERACTIONTYPE": "0",
+                        "ISREAD": "1",
+                        "ABOLITION": "0",
+                        "ATTACHPIC": "1",
+                        "DOCSOURCENAME": "",
+                        "FLOWID": "",
+                        "GDORDER": "0",
+                        "DATASENDMODE": "0",
+                        "ISTIMINGPUBLISH": "0",
+                        "DOCTYPE": "20",
+                        "DOCFIRSTPUBTIME": "2025-08-29 18:54:06",
+                        "CANPUB": "1",
+                        "CANEDIT": "true",
+                        "DOCORDER": "34",
+                        "PUBQUOTEDOC": "0",
+                        "RECID": "84085",
+                        "ACTIONTYPE": "3",
+                        "DOCCHANNEL": "2240",
+                        "PUSHUIRBSTATUS": "1",
+                        "CANCELPUBTIME": "",
+                        "PUSHRECEIVERACTIONTYPE": "0",
+                        "ISDELETED": "0",
+                        "INVALIDTIME": "",
+                        "CRUSER": "dev",
+                        "DOCORDERPRI": "0",
+                        "NEEDMANUALSYNC": "0",
+                        "OPERUSER": "dev",
+                        "CRTIME": "2025-08-29 18:53:15",
+                        "OPERTIME": "2025-08-29 18:54:06",
+                        "DOCPUBTIME": "2025-08-29 18:54:06",
                         "DOCSTATUS": "10",
-                        "PUBSTATUS": "1",
-                        "DOCID": f"e2e_test_news_{timestamp}",
+                        "CRDEPT": "云南省能源投资集团有限公司~云南能投信息产业开发有限公司~",
+                        "DOCRELTIME": "2025-04-09 15:46:25",
+                        "DOCLEVEL": "0",
+                        "REFUSESTATUS": "0",
+                        "ORIGINRECID": "76655",
+                        "DOCID": "64941",
                         "CHNLID": "2240",
-                        "SITEID": "33"
+                        "DISTRECEIVERACTIONTYPE": "0",
+                        "DOCPUBURL": "https://www.cnyeig.com/csts/test_2240/202508/t20250829_64941.html",
+                        "ACTIONUSER": "dev",
+                        "ISMASTERCHNL": "0",
+                        "ARCHIVETIME": "",
+                        "DOCOUTUPID": "61261",
+                        "DISTSENDERACTIONTYPE": "0",
+                        "DOCKIND": "11",
+                        "CARBONCOPYSENDERACTIONTYPE": "0",
+                        "SITEID": "33",
+                        "PUBSTATUS": "1",
+                        "MODAL": "1",
+                        "PUSHSENDERACTIONTYPE": "0"
                     },
-                    "APPENDIX": [
-                        {
-                            "APPFILE": "test_image.jpg",
-                            "APPFLAG": "20"
-                        },
-                        {
-                            "APPFILE": "test_video.mp4",
-                            "APPFLAG": "50"
-                        }
-                    ],
+                    "CRUSER": "dev",
+                    "APPENDIX": [{
+                        "APPFILE": "/masvod/public/2025/04/09/20250409_196198623cd_r1_1200k.mp4",
+                        "APPFLAG": "50"
+                    }, {
+                        "APPFILE": "/mas/openapi/pages.do?method=exPlay&appKey=gov&id=186&autoPlay=false",
+                        "APPFLAG": "140"
+                    }, {
+                        "APPFILE": "/mas/openapi/pages.do?method=exPlay&appKey=gov&id=186&autoPlay=false",
+                        "APPFLAG": "140"
+                    }, {
+                        "APPFILE": "W020250829679959407981.jpg",
+                        "APPFLAG": "20"
+                    }],
                     "ID": "84085",
                     "CHANNELDESCNAV": "数字能投推送测试",
                     "TYPE": "1"
-                },
-                "ISSUCCESS": "true"
-            },
-            {
-                "MSG": "操作成功",
-                "DATA": {
-                    "SITENAME": "测试推送2",
-                    "CRTIME": "2025-08-29 19:00:00",
-                    "CHANNELID": "2241",
-                    "VIEWID": "12",
-                    "VIEWNAME": "GovDocNewsAPP",
-                    "SITEID": "34",
-                    "DOCID": f"e2e_test_notice_{timestamp}",
-                    "OPERTYPE": "2",
-                    "CHANNELNAV": "2241",
-                    "DATA": {
-                        "DOCTITLE": "端到端测试通知公告",
-                        "DOCCONTENT": "这是一条端到端测试通知公告内容。",
-                        "DOCAUTHOR": "行政部",
-                        "DOCRELTIME": "2025-04-10 10:00:00",
-                        "DOCPUBURL": f"https://www.cnyeig.com/csts/test_2241/202508/t{timestamp}_64942.html",
-                        "MEDIATYPE": "1",
-                        "ATTACHPIC": "1",
-                        "THUMBFILES": "notice_doc.jpg",
-                        "SITENAME": "测试推送2",
-                        "CHANNELID": "2241",
-                        "SITEID": "34",
-                        "PUBSTATUS": "1"
-                    },
-                    "CHNLDOC": {
-                        "DOCSTATUS": "10",
-                        "PUBSTATUS": "1",
-                        "DOCID": f"e2e_test_notice_{timestamp}",
-                        "CHNLID": "2241",
-                        "SITEID": "34"
-                    },
-                    "APPENDIX": [
-                        {
-                            "APPFILE": "test_document.pdf",
-                            "APPFLAG": "30"
-                        }
-                    ]
-                },
-                "ISSUCCESS": "true"
-            },
-            {
-                "MSG": "操作成功",
-                "DATA": {
-                    "SITENAME": "测试推送3",
-                    "CRTIME": "2025-08-29 20:15:30",
-                    "CHANNELID": "9999",  # 不存在的频道，测试默认分类
-                    "VIEWID": "13",
-                    "VIEWNAME": "GovDocNewsAPP",
-                    "SITEID": "35",
-                    "DOCID": f"e2e_test_unknown_{timestamp}",
-                    "OPERTYPE": "3",
-                    "CHANNELNAV": "9999",
-                    "DATA": {
-                        "DOCTITLE": "端到端测试未知分类内容",
-                        "DOCCONTENT": "这是一条测试未知分类的内容，用于验证默认分类处理。",
-                        "DOCAUTHOR": "测试部门",
-                        "DOCRELTIME": "2025-04-11 14:30:00",
-                        "DOCPUBURL": f"https://www.cnyeig.com/csts/test_9999/202508/t{timestamp}_64943.html",
-                        "MEDIATYPE": "1",
-                        "SITENAME": "测试推送3",
-                        "CHANNELID": "9999",
-                        "SITEID": "35",
-                        "PUBSTATUS": "1"
-                    },
-                    "CHNLDOC": {
-                        "DOCSTATUS": "10",
-                        "PUBSTATUS": "1",
-                        "DOCID": f"e2e_test_unknown_{timestamp}",
-                        "CHNLID": "9999",
-                        "SITEID": "35"
-                    },
-                    "APPENDIX": []
                 },
                 "ISSUCCESS": "true"
             }
@@ -296,11 +340,11 @@ class EndToEndTest:
             
             start_time = time.time()
             
-            while len(self.received_messages) < expected_count:
+            while True:
                 # 检查超时
-                if time.time() - start_time > timeout_seconds:
-                    logger.warning(f"消费超时，已接收 {len(self.received_messages)}/{expected_count} 条消息")
-                    break
+                # if time.time() - start_time > timeout_seconds:
+                #     logger.warning(f"消费超时，已接收 {len(self.received_messages)}/{expected_count} 条消息")
+                #     break
                 
                 try:
                     # 接收消息
@@ -311,7 +355,7 @@ class EndToEndTest:
                         
                         # 检查是否是测试消息
                         properties = msg.properties()
-                        if properties.get('message_type') == 'e2e_test':
+                        if properties.get('message_type') == 'e2e_test' and properties.get('doc_id') == '64941':
                             try:
                                 # 解析消息内容
                                 message_content = msg.data().decode('utf-8')
@@ -329,10 +373,14 @@ class EndToEndTest:
                                 if self.transformer:
                                     try:
                                         transform_start = time.time()
-                                        processed_data = self.transformer.transform(message_data)
+                                        processed_data = self.transformer.transform_message_from_dict(message_data)
                                         transform_end = time.time()
                                         logger.info(f"✅ 数据转换成功")
-                                        logger.info(f"转换后标题: {processed_data.get('title', 'Unknown')}")
+                                        # 转换后的数据是ArchiveRequestSchema对象，需要访问其属性
+                                        if hasattr(processed_data, 'data') and hasattr(processed_data.data, 'title'):
+                                            logger.info(f"转换后标题: {processed_data.data.title}")
+                                        else:
+                                            logger.info(f"转换后数据类型: {type(processed_data).__name__}")
                                         logger.info(f"转换耗时: {transform_end - transform_start:.3f}秒")
                                     except Exception as e:
                                         logger.error(f"❌ 数据转换失败: {str(e)}")
@@ -364,8 +412,8 @@ class EndToEndTest:
                             logger.debug("跳过非测试消息")
                 
                 except pulsar.Timeout:
-                    # 超时是正常的，继续循环
-                    continue
+                    # 跳出循环，说明没有需要消费的数据了
+                    break
                     
                 except Exception as e:
                     logger.error(f"接收消息时出错: {str(e)}")

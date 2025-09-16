@@ -18,10 +18,10 @@ class PulsarConfig(BaseSettings):
         env_prefix="PULSAR_"
     )
     
-    cluster_url: str = Field(default="pulsar://localhost:6650")
-    topic: str = Field(default="persistent://public/default/content-publish")
+    cluster_url: str = Field(default="pulsar://192.168.210.60:26650")
+    topic: str = Field(default="user-to-pretreat")
     subscription: str = Field(default="hydocpusher-subscription")
-    dead_letter_topic: str = Field(default="user-to-pretreat")
+    dead_letter_topic: str = Field(default="user-to-pretreat-dlq")
     
     # 认证配置
     username: Optional[str] = Field(default=None)
@@ -84,8 +84,8 @@ class ArchiveConfig(BaseSettings):
         case_sensitive=False,
         env_prefix="ARCHIVE_"
     )
-    api_url: str = Field(default="http://localhost:8080")
-    base_url: str = Field(default="http://localhost:8080")  # 添加base_url字段作为api_url的别名
+    api_url: str = Field(default="http://10.20.162.1:8080/news/archive/receive")
+    base_url: str = Field(default="http://10.20.162.1:8080/news/archive/receive")  # 添加base_url字段作为api_url的别名
     timeout: int = Field(default=30000)
     retry_max_attempts: int = Field(default=3)
     retry_delay: int = Field(default=60000)
